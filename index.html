@@ -4,28 +4,40 @@
    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
    <script src="http://d3js.org/queue.v1.min.js"></script>
- 
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+   <!-- Bootstrap core CSS -->
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="css/default.css" />
 <style>
 
-.legend {
-    padding: 0px 0px;
-    font: 10px sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
-}
-
-.key path {
-  display: none;
-}
 
 </style>
 </head>
 <body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+                <div class="collapse navbar-collapse">
+                        <a class="navbar-brand" href="?">BigData Week Hackathon</a>
+                </div><!--/.nav-collapse -->
+         </div>
+      </div>
+</div>
+
+<div class="container-full">
+      <div class="starter-template">
  
-        <div id="map" style="width: 1280px; height: 800px"></div>
- 
+      <div id="map" style="width: 100%; height: 800px;"></div>
 <script>
 
 queue()
@@ -45,7 +57,7 @@ function makeMap(error, data_1,gjson_1) {
 
 
     var color = d3.scale.threshold()
-              .domain([3.0, 7.0, 8.0, 9.0, 9.0])
+              .domain([10.0, 20.0, 30.0, 50.0, 50.0])
               .range(['#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443']);
 
 
@@ -65,7 +77,7 @@ function makeMap(error, data_1,gjson_1) {
 
     function style_1(feature) {
     return {
-        fillColor: color(matchKey(feature.properties.NOM, data_1)),
+        fillColor: color(matchKey(feature.properties.ABREV, data_1)),
         weight: 1,
         opacity: 0.2,
         color: 'black',
@@ -127,5 +139,7 @@ function makeMap(error, data_1,gjson_1) {
 };
 
 </script>
+	</div>
+</div>
  
 </body>
