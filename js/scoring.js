@@ -5,24 +5,23 @@ function DataSource(url, name) {
     this.name = name;
     this.url = url;
     this.data = d3.map();
-    this.get_normalized_data = function() {
-        var ret = {};
-        var max = d3.max(data.values());
-
-        for (k in this.data)
-            ret[k] = this.data.k*100/max;
-
-        return ret;
+    this.get_normalized_data = function(arr) {
+        var max = d3.max(this.data.values());
+        return this.data[arr]*100/max;
     };
 }
 
-function load_data() {
+function add_data_source(name, url) {
+    var ds = new DataSource(initial_sources[name], name);
+    d3.json(ds.url, function (error, json) {
+        if (error) return console.warn(error);
+        ds.data = d3.map(json[0]);
+    });
+    data_sources[data_sources.length] = ds;
+}
+
+function load_initial_data() {
     for (name in initial_sources){
-        var ds = new DataSource(initial_sources[name], name);
-        d3.json(ds.url, function (error, json) {
-            if (error) return console.warn(error);
-            ds.data = d3.map(json[0]);
-        });
-        data_sources[data_sources.length] = ds;
+        add_data_source(name, initial_sources[name]);
     }    
 }
