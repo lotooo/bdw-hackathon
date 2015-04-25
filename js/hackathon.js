@@ -1,13 +1,56 @@
 queue()
-    .defer(d3.json, 'data.json')
-    .defer(d3.json, 'montreal.json')
+    .defer(d3.json, 'http://hackathon.cloudops.net/data.json')
+    .defer(d3.json, 'http://hackathon.cloudops.net/montreal.json')
     .await(makeMap)
+
+
+function onMapClick(e) {
+	alert("You clicked the map at " + e.latlng);
+}
 
 function makeMap(error, data_1,gjson_1) {
 
     function matchKey(datapoint, key_variable){
         return(parseFloat(key_variable[0][datapoint]));
     };
+
+    // Let's try to create a popu when the mouse is over an arrondissement
+    var info = L.control();
+
+    function highlightFeature(e) {
+	    var layer = e.target;
+
+	    layer.setStyle({
+		weight: 5,
+		color: '#666',
+		dashArray: '',
+		fillOpacity: 0.7
+	    });
+
+	    if (!L.Browser.ie && !L.Browser.opera) {
+		layer.bringToFront();
+	    }
+
+	    info.update(layer.feature.properties);
+    }
+
+    function resetHighlight(e) {
+	info.update();
+    }
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Swimming pool number</h4>' +  (props ?
+            '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+            : 'Hover over a state');
+    };
+
 
 
     var color = d3.scale.threshold()
@@ -16,6 +59,9 @@ function makeMap(error, data_1,gjson_1) {
 
 
     var map = L.map('map', {minZoom:11}).setView([45.55, -73.7], 11);
+
+    map.on('click', onMapClick);
+    info.addTo(map)
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
