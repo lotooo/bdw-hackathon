@@ -4,10 +4,6 @@ queue()
     .await(makeMap)
 
 
-function onMapClick(e) {
-	alert("You clicked the map at " + e.latlng);
-}
-
 function makeMap(error, data_1,gjson_1) {
 
     function matchKey(datapoint, key_variable){
@@ -51,8 +47,6 @@ function makeMap(error, data_1,gjson_1) {
             : 'Hover over a state');
     };
 
-
-
     var color = d3.scale.threshold()
               .domain([10.0, 20.0, 30.0, 50.0, 50.0])
               .range(['#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443']);
@@ -60,7 +54,6 @@ function makeMap(error, data_1,gjson_1) {
 
     var map = L.map('map', {minZoom:11}).setView([45.55, -73.7], 11);
 
-    map.on('click', onMapClick);
     info.addTo(map)
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -80,7 +73,7 @@ function makeMap(error, data_1,gjson_1) {
 
     gJson_layer_1 = L.geoJson(gjson_1, {style: style_1}).addTo(map)
 
-    var legend = L.control({position: 'topright'});
+    var legend = L.control({position: 'bottomright'});
 
     legend.onAdd = function (map) {var div = L.DomUtil.create('div', 'legend'); return div};
 
