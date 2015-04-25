@@ -46,9 +46,8 @@ function makeMap(error, data_1,gjson_1) {
 
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Swimming pool number</h4>' +  (props ?
-            '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
-            : 'Hover over a state');
+        this._div.innerHTML = '<h4>' +  (props ? props.NOM + '</h4> <br />' + props.NUM + ' swimming pools'
+            : 'Mouse over an arrondissemnt');
     };
 
     var color = d3.scale.threshold()
