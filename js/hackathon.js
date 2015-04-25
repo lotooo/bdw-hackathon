@@ -55,7 +55,7 @@ function makeMap(error, data_1,gjson_1) {
               .range(['#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443']);
 
 
-    var map = L.map('map', {minZoom:11}).setView([45.55, -73.7], 11);
+    var map = L.map('map', {minZoom:11, maxZoom:11}).setView([45.55, -73.7], 11);
 
     info.addTo(map)
 
