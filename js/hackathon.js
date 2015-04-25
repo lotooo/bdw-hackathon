@@ -17,10 +17,10 @@ function makeMap(error, data_1,gjson_1) {
 	    var layer = e.target;
 
 	    layer.setStyle({
-		weight: 5,
-		color: '#666',
+		weight: 8,
+		color: '#6666CC',
 		dashArray: '',
-		fillOpacity: 0.7
+		fillOpacity: 1
 	    });
 
 	    if (!L.Browser.ie && !L.Browser.opera) {
@@ -30,8 +30,12 @@ function makeMap(error, data_1,gjson_1) {
 	    info.update(layer.feature.properties);
     }
 
-    function resetHighlight(e) {
-	info.update();
+
+    function onEachFeature(feature, layer) {
+	    layer.on({
+		mouseover: highlightFeature,
+		mouseout: resetHighlight,
+	    });
     }
 
     info.onAdd = function (map) {
@@ -71,7 +75,12 @@ function makeMap(error, data_1,gjson_1) {
 	    };
     }
 
-    gJson_layer_1 = L.geoJson(gjson_1, {style: style_1}).addTo(map)
+    gJson_layer_1 = L.geoJson(gjson_1, {style: style_1, onEachFeature: onEachFeature}).addTo(map)
+
+    function resetHighlight(e) {
+	gJson_layer_1.resetStyle(e.target);
+	info.update();
+    }
 
     var legend = L.control({position: 'bottomright'});
 
