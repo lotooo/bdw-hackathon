@@ -8,7 +8,7 @@ function DataSource(url, name) {
     this.data = d3.map();
     this.get_normalized_data = function(arr) {
         var max = d3.max(curObj.data.values());
-        return curObj.data[arr]*100/max;
+        return curObj.data.get(arr)*100/max;
     };
     d3.json(curObj.url, function (error, json) {
         if (error) return console.warn(error);
