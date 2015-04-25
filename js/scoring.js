@@ -1,6 +1,7 @@
 var data_sources = []
 
-function DataSource(url) {
+function DataSource(url, name) {
+    this.name = name;
     this.url = url;
     this.data = d3.map();
     this.get_normalized_data = function() {
@@ -15,6 +16,6 @@ function DataSource(url) {
 
     d3.json(url, function (error, json) {
         if (error) return console.warn(error);
-        this.data = d3.map(json);
+        this.data = d3.map(json[0]);
     });
 }
