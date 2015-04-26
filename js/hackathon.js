@@ -4,14 +4,10 @@ queue()
     .await(makeMap)
 
 
-function onMapClick(e) {
-	alert("You clicked the map at " + e.latlng);
-}
+function makeMap(error, gjson_1) {
 
-function makeMap(error, data_1,gjson_1) {
-
-    function matchKey(datapoint, key_variable){
-        return(parseFloat(key_variable[0][datapoint]));
+    function matchKey(datapoint){
+        return(parseFloat(get_arr_score(datapoint)));
     };
 
     // Let's try to create a popu when the mouse is over an arrondissement
@@ -21,10 +17,10 @@ function makeMap(error, data_1,gjson_1) {
 	    var layer = e.target;
 
 	    layer.setStyle({
-		weight: 5,
-		color: '#666',
+		weight: 8,
+		color: '#6666CC',
 		dashArray: '',
-		fillOpacity: 0.7
+		fillOpacity: 1
 	    });
 
 	    if (!L.Browser.ie && !L.Browser.opera) {
@@ -34,8 +30,12 @@ function makeMap(error, data_1,gjson_1) {
 	    info.update(layer.feature.properties);
     }
 
-    function resetHighlight(e) {
-	info.update();
+
+    function onEachFeature(feature, layer) {
+	    layer.on({
+		mouseover: highlightFeature,
+		mouseout: resetHighlight,
+	    });
     }
 
     info.onAdd = function (map) {
@@ -46,21 +46,20 @@ function makeMap(error, data_1,gjson_1) {
 
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Swimming pool number</h4>' +  (props ?
-            '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
-            : 'Hover over a state');
+        this._div.innerHTML = '<h4>' +  (props ? props.NOM + '</h4>'
+		+ "<br /><span class='i_title'>Code</span> : " + props.ABREV
+		+ "<br /><span class='i_title'>Surface : </span>" + (props.AIRE / 1000000).toFixed(2) + " km<sup>2</sup>"
+		+ "<br /><span class='i_title'>Swimming pools: </span>" + props.NUM
+            : 'Mouse over an arrondissemnt');
     };
 
-
-
     var color = d3.scale.threshold()
-              .domain([10.0, 20.0, 30.0, 50.0, 50.0])
-              .range(['#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443']);
+              .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
+              .range(['#FFFFFF','#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443', '#248544']);
 
 
-    var map = L.map('map', {minZoom:11}).setView([45.55, -73.7], 11);
+    var map = L.map('map', {minZoom:11, maxZoom:11}).setView([45.55, -73.7], 11);
 
-    map.on('click', onMapClick);
     info.addTo(map)
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -70,7 +69,7 @@ function makeMap(error, data_1,gjson_1) {
 
     function style_1(feature) {
 	    return {
-		fillColor: color(matchKey(feature.properties.ABREV, data_1)),
+		fillColor: color(matchKey(feature.properties.ABREV)),
 		weight: 1,
 		opacity: 0.2,
 		color: 'black',
@@ -78,16 +77,21 @@ function makeMap(error, data_1,gjson_1) {
 	    };
     }
 
-    gJson_layer_1 = L.geoJson(gjson_1, {style: style_1}).addTo(map)
+    gJson_layer_1 = L.geoJson(gjson_1, {style: style_1, onEachFeature: onEachFeature}).addTo(map)
 
-    var legend = L.control({position: 'topright'});
+    function resetHighlight(e) {
+	gJson_layer_1.resetStyle(e.target);
+	info.update();
+    }
+
+    var legend = L.control({position: 'bottomright'});
 
     legend.onAdd = function (map) {var div = L.DomUtil.create('div', 'legend'); return div};
 
     legend.addTo(map);
 
     var x = d3.scale.linear()
-    .domain([0, 50])
+    .domain([0, 100])
     .range([0, 400]);
 
     var xAxis = d3.svg.axis()
@@ -121,7 +125,7 @@ function makeMap(error, data_1,gjson_1) {
     g.call(xAxis).append("text")
         .attr("class", "caption")
         .attr("y", 21)
-        .text('Public Swimming Pool Number ');
+        .text('Arrondissement likelyness');
 
 
 };
