@@ -75,8 +75,8 @@ function makeMap(error, gjson_1) {
     };
 
     var color = d3.scale.threshold()
-              .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
-              .range(['#CC0000','#F03217', '#F56F0F', '#FFED00','#FEE901', '#8ED103', '#52C004', '#00A806']);
+              .domain([0.0, 1.0, 10.0, 20.0, 30.0, 40.0, 50.0, 70.0, 100.0])
+              .range(['#6E6E6E' ,'#6E6E6E','#F03217', '#F56F0F', '#FFED00','#FEE901', '#8ED103', '#52C004', '#00A806']);
 
     var southWest = L.latLng(45, -73.701),
     northEast = L.latLng(46, -73.699),
