@@ -32,18 +32,15 @@ app.get('/hello', function (req, res) {
 
 app.get('/arbres', function (req, res) {
 
-
-
   agg('arbre', 'arrondissement').then(function(response){
     
-
     var arr = {};
     var buckets = response.aggregations.arronds.buckets;
 
     console.log(response);
     for(var i in buckets){
       var arrond = buckets[i];
-      arr[JSON.stringify(arrond.key).toUpperCase()] = arrond.doc_count;
+      arr[arrond.key.toUpperCase()] = arrond.doc_count;
 
     }
 
