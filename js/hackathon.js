@@ -45,13 +45,16 @@ function makeMap(error, gjson_1) {
 
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>' +  (props ? props.NOM + '</h4> <br />' + props.NUM + ' swimming pools'
+        this._div.innerHTML = '<h4>' +  (props ? props.NOM + '</h4>'
+		+ "<br /><span class='i_title'>Code</span> : " + props.ABREV
+		+ "<br /><span class='i_title'>Surface : </span>" + (props.AIRE / 1000000).toFixed(2) + " km<sup>2</sup>"
+		+ "<br /><span class='i_title'>Swimming pools: </span>" + props.NUM
             : 'Mouse over an arrondissemnt');
     };
 
     var color = d3.scale.threshold()
-              .domain([10.0, 20.0, 30.0, 50.0, 50.0])
-              .range(['#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443']);
+              .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
+              .range(['#FFFFFF','#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443', '#248544']);
 
 
     var map = L.map('map', {minZoom:11, maxZoom:11}).setView([45.55, -73.7], 11);
@@ -87,7 +90,7 @@ function makeMap(error, gjson_1) {
     legend.addTo(map);
 
     var x = d3.scale.linear()
-    .domain([0, 50])
+    .domain([0, 100])
     .range([0, 400]);
 
     var xAxis = d3.svg.axis()
@@ -121,7 +124,7 @@ function makeMap(error, gjson_1) {
     g.call(xAxis).append("text")
         .attr("class", "caption")
         .attr("y", 21)
-        .text('Public Swimming Pool Number ');
+        .text('Arrondissement likelyness');
 
 
 };
