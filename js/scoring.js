@@ -5,7 +5,7 @@ function DataSource(url, name, weight) {
     this.data = d3.map();
     this.weight = weight;
     this.get_normalized_data = function(arr, arr_size) {
-        if (!curObj.has(arr)) return 0;
+        if (!curObj.data.has(arr)) return 0;
 
         var max = d3.max(curObj.data.values());
         return (curObj.data.get(arr)/arr_size)*100/(max/arr_size);
