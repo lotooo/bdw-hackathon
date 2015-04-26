@@ -1,6 +1,6 @@
 queue()
-    .defer(d3.json, 'http://hackathon.cloudops.net/data.json')
-    .defer(d3.json, 'http://hackathon.cloudops.net/montreal.json')
+    .defer(d3.json, 'data.json')
+    .defer(d3.json, 'montreal.json')
     .await(makeMap)
 
 
