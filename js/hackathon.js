@@ -34,7 +34,21 @@ function makeMap(error, gjson_1) {
 	    layer.on({
 		mouseover: highlightFeature,
 		mouseout: resetHighlight,
+        click: getMoreInfo
+
 	    });
+    }
+
+    function getMoreInfo(e){
+        var layer = e.target;
+
+        info.getInfo(layer.feature.properties);
+
+    };
+
+    info.getInfo = function(props){
+        console.log(props.ABREV);
+
     }
 
     info.onAdd = function (map) {
