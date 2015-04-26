@@ -1,13 +1,12 @@
 queue()
-    .defer(d3.json, 'http://hackathon.cloudops.net/data.json')
     .defer(d3.json, 'http://hackathon.cloudops.net/montreal.json')
     .await(makeMap)
 
 
-function makeMap(error, data_1,gjson_1) {
+function makeMap(error, gjson_1) {
 
-    function matchKey(datapoint, key_variable){
-        return(parseFloat(key_variable[0][datapoint]));
+    function matchKey(datapoint){
+        return(parseFloat(get_arr_score(datapoint)));
     };
 
     // Let's try to create a popu when the mouse is over an arrondissement
@@ -66,7 +65,7 @@ function makeMap(error, data_1,gjson_1) {
 
     function style_1(feature) {
 	    return {
-		fillColor: color(matchKey(feature.properties.ABREV, data_1)),
+		fillColor: color(matchKey(feature.properties.ABREV)),
 		weight: 1,
 		opacity: 0.2,
 		color: 'black',
