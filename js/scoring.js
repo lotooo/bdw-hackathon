@@ -4,13 +4,13 @@ function DataSource(url, name, weight) {
     this.url = url;
     this.data = d3.map();
     this.weight = weight;
-    this.get_normalized_data = function(arr) {
+    this.get_normalized_data = function(arr, arr_size) {
         var max = d3.max(curObj.data.values());
-        return curObj.data.get(arr)*100/max;
+        return (curObj.data.get(arr)/arr_size)*100/(max/arr_size);
     };
 
-    this.get_weighted_data = function(arr) {
-        return curObj.get_normalized_data(arr)*curObj.weight;
+    this.get_weighted_data = function(arr, arr_size) {
+        return curObj.get_normalized_data(arr, arr_size)*curObj.weight;
     };
 
     d3.json(curObj.url, function (error, json) {
@@ -26,10 +26,10 @@ function add_data_source(url, name, weight) {
     data_sources[data_sources.length] = new DataSource(url, name, weight);
 }
 
-function get_arr_score(arr) {
+function get_arr_score(arr, arr_size) {
     ret = 0;
     for (var i = 0; i < data_sources.length; i++) {
-        ret += data_sources[i].get_weighted_data(arr);
+        ret += data_sources[i].get_weighted_data(arr, arr_size);
     }
     return ret/data_sources.length;
 }

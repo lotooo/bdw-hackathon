@@ -6,7 +6,7 @@ queue()
 function makeMap(error, gjson_1) {
 
     function matchKey(datapoint){
-        return(parseFloat(get_arr_score(datapoint.ABREV)/(datapoint.AIRE / 1000000).toFixed(2)));
+        return(parseFloat(get_arr_score(datapoint.ABREV, (datapoint.AIRE/1000000))));
     };
 
     // Let's try to create a popu when the mouse is over an arrondissement
