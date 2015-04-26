@@ -29,21 +29,40 @@ app.get('/hello', function (req, res) {
      console.log(response)
    });
 
-   client.count({
-     index:'lieuxculturels',
-     body: {
-         query: {
-            match: {
-               arrondissement: 'Verdun'
-            }
-         }
-      }
-   }, function (err, response) {
+   count('lieuxculturels', 'arrondissement', 'Verdun', function(err, response){
      console.log(response)
    });
 
+   // client.count({
+   //   index:'lieuxculturels',
+   //   body: {
+   //       query: {
+   //          match: {
+   //             arrondissement: 'Verdun'
+   //          }
+   //       }
+   //    }
+   // }, function (err, response) {
+   //   console.log(response)
+   // });
+
    res.redirect('back');
 });
+
+var count = function(indexParam, matchParam, toMatch, callback){
+  return client.count({
+     index:indexParam,
+     body: {
+         query: {
+            match: {
+               matchParam: toMatch
+            }
+         }
+      }
+   }, callback);
+}
+
+
 
 var server = app.listen(3000, function () {
 
