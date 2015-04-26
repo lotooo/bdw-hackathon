@@ -62,7 +62,7 @@ function makeMap(error, gjson_1) {
 
     var color = d3.scale.threshold()
               .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
-              .range(['#FFFFFF','#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443', '#248544']);
+              .range(['#CC0000','#CC0000', '#FFCC33', '#FFFF99', '#99CC66', '#6699CC', '#238443', '#248544']);
 
     var southWest = L.latLng(45, -73.701),
     northEast = L.latLng(46, -73.699),
