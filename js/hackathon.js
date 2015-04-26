@@ -52,7 +52,7 @@ function makeMap(error, gjson_1) {
             html =  '<h4>' +  props.NOM + '</h4>';
             html += "<br /><span class='i_title'>Code</span> : " + props.ABREV;
             html += "<br /><span class='i_title'>Surface : </span>" + (props.AIRE / 1000000).toFixed(2) + " km<sup>2</sup>";
-            for (var i = 0; i < data_sources; i ++) {
+            for (var i = 0; i < data_sources.length; i ++) {
                 html += "<br /><span class='i_title'>"+data_source[i].name+": </span>" + data_source.data.get(props.ABREV);
             }
         }
