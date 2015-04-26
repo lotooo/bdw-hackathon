@@ -40,8 +40,6 @@ app.get('/arbres', function (req, res) {
     var arr = {};
     var buckets = response.aggregations.arronds.buckets;
 
-
-
     console.log(response);
     for(var i in buckets){
       var arrond = buckets[i];
@@ -51,7 +49,7 @@ app.get('/arbres', function (req, res) {
 
     console.log(arr);
 
-    res.send(200, arr);
+    res.send(200, [arr]);
 
    });
 });
