@@ -23,6 +23,14 @@ function DataSource(url, name, weight) {
 
 var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'Swiming pools',  1),
                     new DataSource('http://hackathon.cloudops.net/data/patinoires.json', 'Skating rinks', 1),
+                    new DataSource('http://hackathon.cloudops.net/policiers', 'Police station', 1),
+                    new DataSource('http://hackathon.cloudops.net/bixis', 'Bixi station', 1),
+                    new DataSource('http://hackathon.cloudops.net/pompiers', 'Fire station', 1),
+                    new DataSource('http://hackathon.cloudops.net/taxes', 'Taxes', 0),
+                    new DataSource('http://hackathon.cloudops.net/taxe_par_habitant', 'Taxes per inhabitant', 0),
+                    new DataSource('http://hackathon.cloudops.net/habitants', 'Inhabitant', 0),
+                    new DataSource('http://hackathon.cloudops.net/bicycles', 'Bicycles Anchor', 1),
+                    new DataSource('http://hackathon.cloudops.net/familles', 'Family stuff', 1),
                     new DataSource('http://hackathon.cloudops.net/arbres','Trees', 1)]
 
 function add_data_source(url, name, weight) {
@@ -37,31 +45,83 @@ function get_arr_score(arr, arr_size) {
     return ret/data_sources.length;
 }
 
-function remove_datasource(url) {
-    $("#datasource-modal-form .form-inline").each(function (index) {
-        var elt = $(this).children("input[name='url']");
-        if (elt.value == url) {
-            $(this).remove();
-        }
-    });
+function remove_datasource() {
+    $(this).parent().remove();
+}
 
-    for (var i = 0; i < data_sources.length; i++) {
-        if (data_sources[i].url == url) {
-            data_sources.splice(i, i);
-            break;
-        }
-    }
+function create_add_button() {
+    html = '<button class="form-control" type="button"><span class="glyphicon glyphicon-plus-sign"></span></button>';
+    var btn = $.parseHTML(html);
+    $(btn).click(add_datasource);
+    return btn;
+}
+
+function create_delete_button() {
+    html = '<button class="form-control" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button>';
+    var btn = $.parseHTML(html);
+    $(btn).click(remove_datasource);
+    return btn;
+}
+
+function create_data_source_widget(ds) {
+    container = $.parseHTML('<div class="form-inline">');
+    var name = $.parseHTML('<input class="form-control" type="text" name="name" placeholder="Name">');
+    if (ds)
+        $(name).val(ds.name);
+    var url = $.parseHTML('<input class="form-control" type="text" name="url" placeholder="URL">');
+    if (ds)
+        $(url).val(ds.url);
+    var weight = $.parseHTML('<input class="form-control" type="text" name="weight" placeholder="Weight">');
+    if (ds)
+        $(weight).val(ds.weight);
+
+    if (ds)
+        btn = create_delete_button();
+    else
+        btn = create_add_button();
+
+    $(container).append(name);
+    $(container).append(url);
+    $(container).append(weight);
+    $(container).append(btn);
+    return container;
+}
+
+function add_datasource() {
+    var parentelt = $(this).parent();
+    parentelt.after(create_data_source_widget());
+    $(this).children('span').removeClass('glyphicon-add-sign');
+    $(this).children('span').addClass('glyphicon-remove-sign');
+    $(this).off('click');
+    $(this).click(remove_datasource);
+}
+
+function modal_save_changes() {
+    data_sources = [];
+    var elt = $("#datasource-modal-form .form-inline");
+    elt.each(function (index) {
+        var name = "";
+        var url = "";
+        var weight = 0;
+        $(this).children("input[type='text']").each(function (index) {
+            if ($(this).attr('name') == 'name')
+                name = $(this).val();
+            if ($(this).attr('name') == 'url')
+                url = $(this).val();
+            if ($(this).attr('name') == 'weight')
+                weight = $(this).val();
+        });
+        if (name != '' && url != '' && weight != '')
+            data_sources[data_sources.length] = new DataSource(url, name, parseFloat(weight));
+    });
+    $("#myModal").modal('hide');
 }
 
 function load_initial_forms() {
     var elt = $("#datasource-modal-form");
     for (var i = 0; i < data_sources.length; i++) {
-        html = '<div class="form-inline">';
-        html += '<input type="text" placeholder="Name" value="'+data_sources[i].name+'" readonly>';
-        html += '<input type="text" name="url" placeholder="URL" value="'+data_sources[i].url+'" readonly>';
-        html += '<input type="text" placeholder="Weight" value="'+data_sources[i].weight+'" readonly>';
-        html += '<button type="button" onclick="remove_datasource(\''+data_sources[i].url+'\')"><span class="glyphicon glyphicon-remove-sign"></span></button>';
-        html += '</div>';
-        elt.append(html);
+        elt.append(create_data_source_widget(data_sources[i]));
     }
+    elt.append(create_data_source_widget());
+    $("#modal-save-changes").click(modal_save_changes);
 }

@@ -5,18 +5,11 @@ from pykml import parser
 import re
 import libmtl
 
-def extract_zipcode(string):
-    zipsearch =re.compile(r'[A-Z]\d[A-Z] *\d[A-Z]\d')
-    if zipsearch.search(string):
-        return zipsearch.search(string).group()
-    else:
-        return False
-
 es = Elasticsearch([{'host': '74.121.245.248'}])
 
 t = {}
 
-kml = requests.get('http://ville.montreal.qc.ca/pls/portal/portalcon.CSC_CARTE_UTIL_V3.pod_print_kml?p_folder_id=4')
+kml = requests.get('http://ville.montreal.qc.ca/pls/portal/portalcon.CSC_CARTE_UTIL_V3.pod_print_kml?p_folder_id=3')
 
 if kml.status_code == 200:
     root = parser.fromstring(kml.content)
@@ -39,7 +32,7 @@ for poste in postes:
         'arrondissement': arr
     }
     print(doc)
-    res = es.index(index="matt-polices", doc_type='tweet', body=doc)
-    es.indices.refresh(index="matt-polices")
+    res = es.index(index="matt-pompiers", doc_type='tweet', body=doc)
+    es.indices.refresh(index="matt-pompiers")
     
 
