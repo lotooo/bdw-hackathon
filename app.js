@@ -45,6 +45,17 @@ app.get('/policiers', function (req, res) {
    });
 });
 
+app.get('/eaux', function (req, res) {
+
+  agg('matt-eaux', 'arrondissement').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
 app.get('/bixis', function (req, res) {
 
   agg('matt-bixi', 'arrondissement').then(function(response){
