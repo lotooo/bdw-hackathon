@@ -4,6 +4,7 @@ from elasticsearch import Elasticsearch
 from pykml import parser
 import re
 import libmtl
+import time
 
 es = Elasticsearch([{'host': '74.121.245.248'}])
 
@@ -32,7 +33,9 @@ for poste in postes:
         'arrondissement': arr
     }
     print(doc)
-    res = es.index(index="matt-eaux", doc_type='tweet', body=doc)
-    es.indices.refresh(index="matt-eaux")
+    res = es.index(index="matt-water", doc_type='tweet', body=doc)
+    es.indices.refresh(index="matt-water")
+
+    time.sleep(2)
     
 
