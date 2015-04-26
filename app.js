@@ -26,6 +26,20 @@ app.get('/hello', function (req, res) {
    res.redirect('back');
 });
 
+var search = function(indexParam, matchParam, toMatch){
+  var matchObj = {};
+  matchObj[matchParam] = toMatch;
+  return client.search({
+     index:indexParam,
+     body: {
+         query: {
+            match: matchObj
+         }
+      }
+   });
+}
+
+
 var count = function(indexParam, matchParam, toMatch, callback){
 
   var matchObj = {};
@@ -40,8 +54,6 @@ var count = function(indexParam, matchParam, toMatch, callback){
       }
    }, callback);
 }
-
-
 
 var server = app.listen(3000, function () {
   console.log("Listening on port 3000");
