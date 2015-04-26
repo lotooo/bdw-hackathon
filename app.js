@@ -5,7 +5,7 @@ var app = express();
 app.use(express.static(__dirname));
 
 var client = new elasticsearch.Client({
-  host: 'localhost:9200'
+  host: '74.121.245.248:9200'
 });
 
 app.get('/', function (req, res) {
@@ -45,7 +45,7 @@ app.get('/arbres', function (req, res) {
     console.log(response);
     for(var i in buckets){
       var arrond = buckets[i];
-      arr[arrond.key.toUppercase()] = arrond.doc_count;
+      arr[JSON.stringify(arrond.key).toUpperCase()] = arrond.doc_count;
 
     }
 
