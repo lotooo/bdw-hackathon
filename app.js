@@ -12,6 +12,17 @@ app.get('/', function (req, res) {
   res.sendFile('index.html');
 });
 
+app.get('/bicycles', function (req, res) {
+
+  agg('support_velo', 'arrondissement').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
 app.get('/arbres', function (req, res) {
 
   agg('arbre', 'arrondissement').then(function(response){
