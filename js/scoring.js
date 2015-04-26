@@ -19,7 +19,8 @@ function DataSource(url, name, weight) {
     });
 }
 
-var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'Swiming pools',  1)]
+var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'Swiming pools',  1),
+                    new DataSource('http://hackathon.cloudops.net/data/patinoires.json', 'Skating rinks', 1)]
 
 function add_data_source(url, name, weight) {
     data_sources[data_sources.length] = new DataSource(url, name, weight);
