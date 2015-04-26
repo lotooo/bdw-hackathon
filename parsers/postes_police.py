@@ -3,6 +3,7 @@ from datetime import datetime
 from elasticsearch import Elasticsearch
 from pykml import parser
 import re
+import libmtl
 
 def extract_zipcode(string):
     zipsearch =re.compile(r'[A-Z]\d[A-Z] *\d[A-Z]\d')
@@ -25,22 +26,20 @@ for poste in postes:
 
     # Get zipcode from google
     longitude,latitude = str(poste.Point.coordinates).split(',')
-    r = requests.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s' % (latitude, longitude))
-    addresses = r.json()
-    zipcode = [ extract_zipcode(a['formatted_address'])  for a in addresses['results'] if extract_zipcode(a['formatted_address'])  ].pop()
-
+    arr = libmtl.getArrondissementCode(longitude,latitude)
+    
     doc = {
-        'name'          : poste.name,
-        'address'       : poste.info_side_bar,
-        'visibility'    : poste.visibility,
-        'description'   : poste.description,
-        'coord'         : poste.Point.coordinates,
+        'name'          : str(poste.name),
+        'address'       : str(poste.info_side_bar),
+        'visibility'    : str(poste.visibility),
+        'description'   : str(poste.description),
+        'coord'         : str(poste.Point.coordinates),
         'latitude'      : latitude,
         'longitude'     : longitude,
-        'zipcode'       : zipcode
+        'arrondissement': arr
     }
     print(doc)
-    #res = es.index(index="matt-polices", doc_type='tweet', body=doc)
-    #es.indices.refresh(index="matt-polices")
+    res = es.index(index="matt-polices", doc_type='tweet', body=doc)
+    es.indices.refresh(index="matt-polices")
     
 
