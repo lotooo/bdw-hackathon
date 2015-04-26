@@ -6,7 +6,7 @@ queue()
 function makeMap(error, gjson_1) {
 
     function matchKey(datapoint){
-        return(parseFloat(get_arr_score(datapoint)));
+        return(parseFloat(get_arr_score(datapoint.ABREV)/(datapoint.AIRE / 1000000).toFixed(2)));
     };
 
     // Let's try to create a popu when the mouse is over an arrondissement
@@ -78,7 +78,7 @@ function makeMap(error, gjson_1) {
 
     function style_1(feature) {
 	    return {
-		fillColor: color(matchKey(feature.properties.ABREV)),
+		fillColor: color(matchKey(feature.properties)),
 		weight: 1,
 		opacity: 0.8,
 		color: 'grey',
