@@ -1,5 +1,5 @@
 queue()
-    .defer(d3.json, 'montreal.json')
+    .defer(d3.json, 'data/montreal.json')
     .await(makeMap)
 
 
