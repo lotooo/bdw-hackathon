@@ -32,3 +32,32 @@ function get_arr_score(arr) {
     }
     return ret/data_sources.length;
 }
+
+function remove_datasource(url) {
+    $("#datasource-modal-form .form-inline").each(function (index) {
+        var elt = $(this).children("input[name='url']");
+        if (elt.value == url) {
+            $(this).remove();
+        }
+    });
+
+    for (var i = 0; i < data_sources.length; i++) {
+        if (data_sources[i].url == url) {
+            data_sources.splice(i, i);
+            break;
+        }
+    }
+}
+
+function load_initial_forms() {
+    var elt = $("#datasource-modal-form");
+    for (var i = 0; i < data_sources.length; i++) {
+        html = '<div class="form-inline">';
+        html += '<input type="text" placeholder="Name" value="'+data_sources[i].name+'" readonly>';
+        html += '<input type="text" name="url" placeholder="URL" value="'+data_sources[i].url+'" readonly>';
+        html += '<input type="text" placeholder="Weight" value="'+data_sources[i].weight+'" readonly>';
+        html += '<button type="button" onclick="remove_datasource(\''+data_sources[i].url+'\')"><span class="glyphicon glyphicon-remove-sign"></span></button>';
+        html += '</div>';
+        elt.append(html);
+    }
+}
