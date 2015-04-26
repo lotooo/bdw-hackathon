@@ -26,7 +26,6 @@ var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'S
                     new DataSource('http://hackathon.cloudops.net/policiers', 'Police station', 1),
                     new DataSource('http://hackathon.cloudops.net/bixis', 'Bixi station', 1),
                     new DataSource('http://hackathon.cloudops.net/pompiers', 'Fire station', 1),
-                    new DataSource('http://hackathon.cloudops.net/eaux', 'Water station', 1),
                     new DataSource('http://hackathon.cloudops.net/bicycles', 'Bicycles Anchor', 1),
                     new DataSource('http://hackathon.cloudops.net/familles', 'Family stuff', 1),
                     new DataSource('http://hackathon.cloudops.net/arbres','Trees', 1)]
