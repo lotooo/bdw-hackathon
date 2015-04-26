@@ -55,6 +55,7 @@ function makeMap(error, gjson_1) {
             for (var i = 0; i < data_sources.length; i ++) {
                 html += "<br /><span class='i_title'>"+data_sources[i].name+": </span>" + data_sources[i].data.get(props.ABREV);
             }
+            html += "<br /><span class='i_title'>Score : </span>" + get_arr_score(props.ABREV).toFixed(2);
         }
         this._div.innerHTML = html;
     };
