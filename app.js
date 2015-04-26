@@ -78,6 +78,47 @@ app.get('/patinoires', function (req, res) {
    });
 });
 
+app.get('/habitants', function (req, res) {
+
+  searchIndex('finance').then(function(response){
+    
+    var mapped = getFinanceInfo(response.hits.hits, "habs");
+
+    res.send(200, mapped);
+
+   });
+});
+
+app.get('/taxes', function (req, res) {
+
+  searchIndex('finance').then(function(response){
+    
+    var mapped = getFinanceInfo(response.hits.hits, "taxe");
+
+    res.send(200, mapped);
+
+   });
+});
+
+app.get('/taxe_par_habitant', function (req, res) {
+
+  searchIndex('finance').then(function(response){
+    
+    var mapped = getFinanceInfo(response.hits.hits, "per_hab");
+
+    res.send(200, mapped);
+
+   });
+});
+
+var getFinanceInfo = function(buckets, param){
+  var arr = {};
+    for(var i in buckets){
+      var arrond = buckets[i]._source;
+      arr[arrond.arrond_id.toUpperCase()] = arrond[param];
+    }
+    return [arr];
+}
 
 var mapToAbbr = function (buckets){
     var arr = {};
@@ -88,12 +129,19 @@ var mapToAbbr = function (buckets){
     return [arr];
 }
 
+var searchIndex = function(indexParam){
+  return client.search({
+     index:indexParam,
+     "from" : 0, "size" : 100
+   });
+}
 
 var search = function(indexParam, matchParam, toMatch){
   var matchObj = {};
   matchObj[matchParam] = toMatch;
   return client.search({
      index:indexParam,
+     "from" : 0, "size" : 100,
      body: {
          query: {
             match: matchObj
@@ -101,7 +149,6 @@ var search = function(indexParam, matchParam, toMatch){
       }
    });
 }
-
 
 var agg = function(indexParam, toMatch, callback){
   return client.search({
@@ -111,7 +158,8 @@ var agg = function(indexParam, toMatch, callback){
          aggregations: {
             "arronds":{
                 terms: {
-                field:toMatch
+                field:toMatch,
+                size:0
               }
             }
          }
@@ -119,15 +167,13 @@ var agg = function(indexParam, toMatch, callback){
    });
 }
 
-
-
 var count = function(indexParam, matchParam, toMatch, callback){
-
   var matchObj = {};
   matchObj[matchParam] = toMatch;
 
   return client.count({
      index:indexParam,
+     "from" : 0, "size" : 100,
      body: {
          query: {
             match: matchObj
