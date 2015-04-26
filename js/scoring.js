@@ -19,16 +19,10 @@ function DataSource(url, name, weight) {
     });
 }
 
-var data_sources = [new DataSource('Swiming pools', 'http://hackathon.cloudops.net/data.json', 1)]
+var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'Swiming pools',  1)]
 
-function add_data_source(name, url) {
-    data_sources[data_sources.length] = new DataSource(initial_sources[name], name);
-}
-
-function load_initial_data() {
-    for (name in initial_sources){
-        add_data_source(name, initial_sources[name]);
-    }    
+function add_data_source(url, name, weight) {
+    data_sources[data_sources.length] = new DataSource(url, name, weight);
 }
 
 function get_arr_score(arr) {
@@ -38,5 +32,3 @@ function get_arr_score(arr) {
     }
     return ret/data_sources.length;
 }
-
-load_initial_data();
