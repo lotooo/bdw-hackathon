@@ -21,17 +21,17 @@ function DataSource(url, name, weight) {
     });
 }
 
-var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'Swiming pools',  1),
-                    new DataSource('http://hackathon.cloudops.net/data/patinoires.json', 'Skating rinks', 1),
-                    new DataSource('http://hackathon.cloudops.net/policiers', 'Police station', 1),
-                    new DataSource('http://hackathon.cloudops.net/bixis', 'Bixi station', 1),
-                    new DataSource('http://hackathon.cloudops.net/pompiers', 'Fire station', 1),
-                    new DataSource('http://hackathon.cloudops.net/taxes', 'Taxes', 0),
-                    new DataSource('http://hackathon.cloudops.net/taxe_par_habitant', 'Taxes per inhabitant', 0),
-                    new DataSource('http://hackathon.cloudops.net/habitants', 'Inhabitant', 0),
-                    new DataSource('http://hackathon.cloudops.net/bicycles', 'Bicycles Anchor', 1),
-                    new DataSource('http://hackathon.cloudops.net/familles', 'Family stuff', 1),
-                    new DataSource('http://hackathon.cloudops.net/arbres','Trees', 1)]
+var data_sources = [new DataSource('http://dreamisland.cloudops.net/data.json', 'Swiming pools',  1),
+                    new DataSource('http://dreamisland.cloudops.net/data/patinoires.json', 'Skating rinks', 1),
+                    new DataSource('http://dreamisland.cloudops.net/policiers', 'Police station', 1),
+                    new DataSource('http://dreamisland.cloudops.net/bixis', 'Bixi station', 1),
+                    new DataSource('http://dreamisland.cloudops.net/pompiers', 'Fire station', 1),
+                    new DataSource('http://dreamisland.cloudops.net/taxes', 'Taxes', 0),
+                    new DataSource('http://dreamisland.cloudops.net/taxe_par_habitant', 'Taxes per inhabitant', 0),
+                    new DataSource('http://dreamisland.cloudops.net/habitants', 'Inhabitant', 0),
+                    new DataSource('http://dreamisland.cloudops.net/bicycles', 'Bicycles Anchor', 10),
+                    new DataSource('http://dreamisland.cloudops.net/familles', 'Family stuff', 1),
+                    new DataSource('http://dreamisland.cloudops.net/arbres','Trees', 1)]
 
 function add_data_source(url, name, weight) {
     data_sources[data_sources.length] = new DataSource(url, name, weight);
