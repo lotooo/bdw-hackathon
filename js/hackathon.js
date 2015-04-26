@@ -1,3 +1,5 @@
+var map;
+
 queue()
     .defer(d3.json, 'data/montreal.json')
     .await(makeMap)
@@ -81,7 +83,7 @@ function makeMap(error, gjson_1) {
     var southWest = L.latLng(45, -73.701),
     northEast = L.latLng(46, -73.699),
     bounds = L.latLngBounds(southWest, northEast);
-    var map = L.map('map', {minZoom:11, maxZoom:11, dragging : false}).setView([45.55, -73.7], 11);
+    map = L.map('map', {minZoom:11, maxZoom:11, dragging : false}).setView([45.55, -73.7], 11);
 
     info.addTo(map)
 

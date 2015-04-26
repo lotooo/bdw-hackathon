@@ -115,6 +115,7 @@ function modal_save_changes() {
             data_sources[data_sources.length] = new DataSource(url, name, parseFloat(weight));
     });
     $("#myModal").modal('hide');
+    map.zoomIn(); map.zoomOut();
 }
 
 function load_initial_forms() {
@@ -124,4 +125,5 @@ function load_initial_forms() {
     }
     elt.append(create_data_source_widget());
     $("#modal-save-changes").click(modal_save_changes);
+    map.zoomIn(); map.zoomOut();
 }
