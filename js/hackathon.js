@@ -6,7 +6,7 @@ queue()
 function makeMap(error, gjson_1) {
 
     function matchKey(datapoint){
-        return(parseFloat(get_arr_score(datapoint)));
+        return(parseFloat(get_arr_score(datapoint.ABREV, (datapoint.AIRE/1000000))));
     };
 
     // Let's try to create a popu when the mouse is over an arrondissement
@@ -55,13 +55,14 @@ function makeMap(error, gjson_1) {
             for (var i = 0; i < data_sources.length; i ++) {
                 html += "<br /><span class='i_title'>"+data_sources[i].name+": </span>" + data_sources[i].data.get(props.ABREV);
             }
+            html += "<br /><span class='i_title'>Score : </span>" + get_arr_score(props.ABREV, (props.AIRE / 1000000)).toFixed(2);
         }
         this._div.innerHTML = html;
     };
 
     var color = d3.scale.threshold()
               .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
-              .range(['#FFFFFF','#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443', '#248544']);
+              .range(['#CC0000','#F03217', '#F56F0F', '#FFED00','#FEE901', '#8ED103', '#52C004', '#00A806']);
 
     var southWest = L.latLng(45, -73.701),
     northEast = L.latLng(46, -73.699),
@@ -77,11 +78,11 @@ function makeMap(error, gjson_1) {
 
     function style_1(feature) {
 	    return {
-		fillColor: color(matchKey(feature.properties.ABREV)),
+		fillColor: color(matchKey(feature.properties)),
 		weight: 1,
-		opacity: 0.2,
-		color: 'black',
-		fillOpacity: 0.7
+		opacity: 0.8,
+		color: 'grey',
+		fillOpacity: 0.8
 	    };
     }
 
