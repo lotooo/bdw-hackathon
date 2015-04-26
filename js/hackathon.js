@@ -63,8 +63,10 @@ function makeMap(error, gjson_1) {
               .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
               .range(['#FFFFFF','#FFFFCC', '#D9F0A3', '#ADDD8E', '#78C679', '#41AB5D', '#238443', '#248544']);
 
-
-    var map = L.map('map', {minZoom:11, maxZoom:11}).setView([45.55, -73.7], 11);
+    var southWest = L.latLng(45, -73.701),
+    northEast = L.latLng(46, -73.699),
+    bounds = L.latLngBounds(southWest, northEast);
+    var map = L.map('map', {minZoom:11, maxZoom:11, dragging : false}).setView([45.55, -73.7], 11);
 
     info.addTo(map)
 
