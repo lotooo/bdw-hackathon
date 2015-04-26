@@ -34,22 +34,67 @@ app.get('/arbres', function (req, res) {
 
   agg('arbre', 'arrondissement').then(function(response){
     
-    var arr = {};
-    var buckets = response.aggregations.arronds.buckets;
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
 
-    console.log(response);
-    for(var i in buckets){
-      var arrond = buckets[i];
-      arr[arrond.key.toUpperCase()] = arrond.doc_count;
-
-    }
-
-    console.log(arr);
-
-    res.send(200, [arr]);
+    res.send(200, mapped);
 
    });
 });
+
+app.get('/pompiers', function (req, res) {
+
+  agg('matt-pompiers', 'arrondissement').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
+app.get('/policiers', function (req, res) {
+
+  agg('matt-polices', 'arrondissement').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
+app.get('/bixi', function (req, res) {
+
+  agg('matt-bixi', 'arrondissement').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
+app.get('/patinoires', function (req, res) {
+
+  agg('matt-patinoires', 'arr').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
+
+var mapToAbbr = function (buckets){
+    var arr = {};
+    for(var i in buckets){
+      var arrond = buckets[i];
+      arr[arrond.key.toUpperCase()] = arrond.doc_count;
+    }
+    return [arr];
+}
+
 
 var search = function(indexParam, matchParam, toMatch){
   var matchObj = {};
