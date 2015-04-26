@@ -47,7 +47,7 @@ function makeMap(error, gjson_1) {
     info.update = function (props) {
         var html = "";
         if (!props) {
-           html = '<h4>Mouse over an arrondissemnt</h4>';
+           html = '<h4>Mouse over an arrondissement</h4>';
         } else { 
             html =  '<h4>' +  props.NOM + '</h4>';
             html += "<br /><span class='i_title'>Code</span> : " + props.ABREV;
