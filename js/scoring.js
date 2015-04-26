@@ -1,6 +1,3 @@
-var initial_sources = {'Swiming pools': 'http://hackathon.cloudops.net/data.json'}
-var data_sources = []
-
 function DataSource(url, name, weight) {
     var curObj = this;
     this.name = name;
@@ -21,6 +18,8 @@ function DataSource(url, name, weight) {
         curObj.data = d3.map(json[0]);
     });
 }
+
+var data_sources = [new DataSource('Swiming pools', 'http://hackathon.cloudops.net/data.json', 1)]
 
 function add_data_source(name, url) {
     data_sources[data_sources.length] = new DataSource(initial_sources[name], name);
