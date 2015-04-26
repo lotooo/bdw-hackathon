@@ -27,8 +27,8 @@ function add_data_source(url, name, weight) {
 
 function get_arr_score(arr) {
     ret = 0;
-    for (var i = 0; i < data_source.length; i++) {
-        ret += data_source[i].get_weighted_data(arr);
+    for (var i = 0; i < data_sources.length; i++) {
+        ret += data_sources[i].get_weighted_data(arr);
     }
     return ret/data_sources.length;
 }
