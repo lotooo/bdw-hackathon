@@ -5,7 +5,7 @@ var app = express();
 app.use(express.static(__dirname));
 
 var client = new elasticsearch.Client({
-  host: '74.121.245.248:9200'
+  host: 'localhost:9200'
 });
 
 app.get('/', function (req, res) {
@@ -14,49 +14,28 @@ app.get('/', function (req, res) {
 
 
 app.get('/hello', function (req, res) {
-  //adsdasdasd
 
-   client.count({
-     index:'lieuxculturels',
-     body: {
-         query: {
-            match: {
-               arrondissement: 'Ahuntsic-Cartierville'
-            }
-         }
-      }
-   }, function (err, response) {
+  count('arbre', 'arrondissement', 'AC', function(err, response){
      console.log(response)
    });
 
-   count('lieuxculturels', 'arrondissement', 'Verdun', function(err, response){
+  count('lieuxculturels', 'arrondissement', 'Verdun', function(err, response){
      console.log(response)
    });
-
-   // client.count({
-   //   index:'lieuxculturels',
-   //   body: {
-   //       query: {
-   //          match: {
-   //             arrondissement: 'Verdun'
-   //          }
-   //       }
-   //    }
-   // }, function (err, response) {
-   //   console.log(response)
-   // });
 
    res.redirect('back');
 });
 
 var count = function(indexParam, matchParam, toMatch, callback){
+
+  var matchObj = {};
+  matchObj[matchParam] = toMatch;
+
   return client.count({
      index:indexParam,
      body: {
          query: {
-            match: {
-               matchParam: toMatch
-            }
+            match: matchObj
          }
       }
    }, callback);
@@ -65,5 +44,5 @@ var count = function(indexParam, matchParam, toMatch, callback){
 
 
 var server = app.listen(3000, function () {
-
+  console.log("Listening on port 3000");
 });
