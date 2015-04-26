@@ -13,7 +13,7 @@ function DataSource(url, name, weight) {
     };
 
     this.get_weighted_data = function(arr) {
-        return curObj.get_normalized_data*curObj.weight;
+        return curObj.get_normalized_data(arr)*curObj.weight;
     };
 
     d3.json(curObj.url, function (error, json) {
