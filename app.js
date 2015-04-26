@@ -12,24 +12,6 @@ app.get('/', function (req, res) {
   res.sendFile('index.html');
 });
 
-
-app.get('/hello', function (req, res) {
-
-  count('arbre', 'arrondissement', 'AC', function(err, response){
-     console.log(response)
-   });
-
-  count('lieuxculturels', 'arrondissement', 'Verdun', function(err, response){
-     console.log(response)
-   });
-
-  agg('arbre', 'arrondissement').then(function(response){
-    console.log(response);
-   });
-
-   res.redirect('back');
-});
-
 app.get('/arbres', function (req, res) {
 
   agg('arbre', 'arrondissement').then(function(response){
@@ -63,9 +45,20 @@ app.get('/policiers', function (req, res) {
    });
 });
 
-app.get('/bixi', function (req, res) {
+app.get('/bixis', function (req, res) {
 
   agg('matt-bixi', 'arrondissement').then(function(response){
+    
+    var mapped = mapToAbbr(response.aggregations.arronds.buckets);
+
+    res.send(200, mapped);
+
+   });
+});
+
+app.get('/familles', function (req, res) {
+
+  agg('matt-famille', 'arrondissement').then(function(response){
     
     var mapped = mapToAbbr(response.aggregations.arronds.buckets);
 
