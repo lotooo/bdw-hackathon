@@ -62,7 +62,7 @@ function makeMap(error, gjson_1) {
 
     var color = d3.scale.threshold()
               .domain([0.0, 10.0, 20.0, 30.0, 40.0, 70.0, 100.0])
-              .range(['#CC0000','#CC0000', '#FFCC33', '#FFFF99', '#99CC66', '#6699CC', '#238443', '#248544']);
+              .range(['#CC0000','#F03217', '#F56F0F', '#FFED00','#FEE901', '#8ED103', '#52C004', '#00A806']);
 
     var southWest = L.latLng(45, -73.701),
     northEast = L.latLng(46, -73.699),
@@ -80,9 +80,9 @@ function makeMap(error, gjson_1) {
 	    return {
 		fillColor: color(matchKey(feature.properties)),
 		weight: 1,
-		opacity: 0.5,
+		opacity: 0.8,
 		color: 'grey',
-		fillOpacity: 0.7
+		fillOpacity: 0.8
 	    };
     }
 
