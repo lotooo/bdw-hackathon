@@ -79,8 +79,8 @@ function makeMap(error, gjson_1) {
 	    return {
 		fillColor: color(matchKey(feature.properties.ABREV)),
 		weight: 1,
-		opacity: 0.2,
-		color: 'black',
+		opacity: 0.5,
+		color: 'grey',
 		fillOpacity: 0.7
 	    };
     }
