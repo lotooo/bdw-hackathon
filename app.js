@@ -23,7 +23,37 @@ app.get('/hello', function (req, res) {
      console.log(response)
    });
 
+  agg('arbre', 'arrondissement').then(function(response){
+    console.log(response);
+   });
+
    res.redirect('back');
+});
+
+app.get('/arbres', function (req, res) {
+
+
+
+  agg('arbre', 'arrondissement').then(function(response){
+    
+
+    var arr = {};
+    var buckets = response.aggregations.arronds.buckets;
+
+
+
+    console.log(response);
+    for(var i in buckets){
+      var arrond = buckets[i];
+      arr[arrond.key.toUppercase()] = arrond.doc_count;
+
+    }
+
+    console.log(arr);
+
+    res.send(200, arr);
+
+   });
 });
 
 var search = function(indexParam, matchParam, toMatch){
@@ -38,6 +68,24 @@ var search = function(indexParam, matchParam, toMatch){
       }
    });
 }
+
+
+var agg = function(indexParam, toMatch, callback){
+  return client.search({
+     index:indexParam,
+     search_type: "count",
+     body: {
+         aggregations: {
+            "arronds":{
+                terms: {
+                field:toMatch
+              }
+            }
+         }
+      }
+   });
+}
+
 
 
 var count = function(indexParam, matchParam, toMatch, callback){
