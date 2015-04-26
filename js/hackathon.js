@@ -125,7 +125,7 @@ function makeMap(error, data_1,gjson_1) {
     g.call(xAxis).append("text")
         .attr("class", "caption")
         .attr("y", 21)
-        .text('Public Swimming Pool Number ');
+        .text('Arrondissement likelyness');
 
 
 };
