@@ -5,6 +5,8 @@ function DataSource(url, name, weight) {
     this.data = d3.map();
     this.weight = weight;
     this.get_normalized_data = function(arr, arr_size) {
+        if (!curObj.data.has(arr)) return 0;
+
         var max = d3.max(curObj.data.values());
         return (curObj.data.get(arr)/arr_size)*100/(max/arr_size);
     };
@@ -20,7 +22,8 @@ function DataSource(url, name, weight) {
 }
 
 var data_sources = [new DataSource('http://hackathon.cloudops.net/data.json', 'Swiming pools',  1),
-                    new DataSource('http://hackathon.cloudops.net/data/patinoires.json', 'Skating rinks', 1)]
+                    new DataSource('http://hackathon.cloudops.net/data/patinoires.json', 'Skating rinks', 1),
+                    new DataSource('http://hackathon.cloudops.net/arbres','Trees', 1)]
 
 function add_data_source(url, name, weight) {
     data_sources[data_sources.length] = new DataSource(url, name, weight);
