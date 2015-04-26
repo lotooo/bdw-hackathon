@@ -17,6 +17,12 @@ def get_arr_name():
     abr = request.args.get('abr', '')
     return libmtl.get_name(abr)
 
+@app.route("/api/get_arr_from_coord")
+def get_arr_from_coord():
+    longitude = request.args.get('longitude', '')
+    latitude = request.args.get('latitude', '')
+    return libmtl.getArrondissementCode(longitude,latitude)
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
