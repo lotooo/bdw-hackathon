@@ -35,7 +35,26 @@
                         <a class="navbar-brand" href="?">BigData Week Hackathon</a>
                 </div><!--/.nav-collapse -->
          </div>
+         <ul class="nav navbar-nav navbar-right">
+             <li class="dropdown">
+                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                     <span class="glyphicon glyphicon-cog"></span>
+                 </button>
+             </li>
+         </ul>
       </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Change data sources</h4>
+            </div>
+            <div class="modal-body" id="datasource-modal-form">
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container-full">
@@ -44,6 +63,9 @@
        <div id="map" style="width: 100%; height: 800px;"></div>
 
        <script src="js/hackathon.js"></script>
+       <script>
+        load_initial_forms();
+       </script>
 
     </div>
 </div>
