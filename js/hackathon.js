@@ -45,11 +45,18 @@ function makeMap(error, gjson_1) {
 
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = '<h4>' +  (props ? props.NOM + '</h4>'
-		+ "<br /><span class='i_title'>Code</span> : " + props.ABREV
-		+ "<br /><span class='i_title'>Surface : </span>" + (props.AIRE / 1000000).toFixed(2) + " km<sup>2</sup>"
-		+ "<br /><span class='i_title'>Swimming pools: </span>" + props.NUM
-            : 'Mouse over an arrondissemnt');
+        var html = "";
+        if (!props) {
+           html = '<h4>Mouse over an arrondissemnt</h4>';
+        } else { 
+            html =  '<h4>' +  props.NOM + '</h4>';
+            html += "<br /><span class='i_title'>Code</span> : " + props.ABREV;
+            html += "<br /><span class='i_title'>Surface : </span>" + (props.AIRE / 1000000).toFixed(2) + " km<sup>2</sup>";
+            for (var i = 0; i < data_sources.length; i ++) {
+                html += "<br /><span class='i_title'>"+data_sources[i].name+": </span>" + data_sources[i].data.get(props.ABREV);
+            }
+        }
+        this._div.innerHTML = html;
     };
 
     var color = d3.scale.threshold()
